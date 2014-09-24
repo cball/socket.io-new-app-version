@@ -1,4 +1,4 @@
-This is an example app that came out of a blog post on realtime app versions. [Check out the post](http://cball.me/realtime-app-version-notices/)
+This is an example app that came out of a blog post on realtime app version notices. [Check out the post](http://cball.me/realtime-app-version-notices/)
 
 ### Requirements
 - Redis
