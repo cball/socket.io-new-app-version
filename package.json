@@ -1,0 +1,10 @@
+{
+  "name": "socket-io-redis-example",
+  "description": "a test app for socket.io redis example to store/push app versions",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.9.4",
+    "socket.io": "^1.1.0"
+  }
+}
