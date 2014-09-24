@@ -9,12 +9,11 @@ var redisClient = redis.createClient();
 var socketIORedis = require('socket.io-redis');
 io.adapter(socketIORedis({ host: 'localhost', port: 6379 }));
 
-redisClient.subscribe('new-app-version');
+redisClient.subscribe('frontend-app-version');
+redisClient.subscribe('iphone-app-version');
 
 redisClient.on('message', function(channel, message) {
-  if(channel == 'new-app-version') {
-    io.emit('new app version', message);
-  }
+  io.emit(channel, message);
 });
 
 // server config
@@ -24,6 +23,6 @@ app.get('/', function (req, res) {
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
-  console.log('publish something to the new-app-version Redis channel (redis-cli publish new-app-version whoa!)');
+  console.log('publish something to the new-app-version Redis channel (redis-cli publish frontend-app-version whoa!)');
   console.log('---');
 });
