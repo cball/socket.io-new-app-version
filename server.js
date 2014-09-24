@@ -3,17 +3,24 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var redis = require('redis');
 var redisClient = redis.createClient();
+var redisSubscriber = redis.createClient();
 
 // use socket.io-redis if you need lots of connections. it allows
 // socket.io to work across servers
 var socketIORedis = require('socket.io-redis');
 io.adapter(socketIORedis({ host: 'localhost', port: 6379 }));
 
-redisClient.subscribe('frontend-app-version');
-redisClient.subscribe('iphone-app-version');
+redisSubscriber.subscribe('frontend-app-version');
+redisSubscriber.subscribe('iphone-app-version');
 
-redisClient.on('message', function(channel, message) {
+redisSubscriber.on('message', function(channel, message) {
   io.emit(channel, message);
+});
+
+io.on('connection', function(socket) {
+  redisClient.get('frontend-app-version', function(error, value) {
+    socket.emit('frontend-app-version', value);
+  });
 });
 
 // server config
